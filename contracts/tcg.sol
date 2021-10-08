@@ -14,7 +14,7 @@ contract tcg is ERC721URIStorage {
     mapping(address=>uint[]) public userOwnedCards;
     mapping(uint=>uint) public cardIndex;
 
-    constructor(string memory tokenName, string memory symbol) ERC721("TradingCard", "TCG") public {
+    constructor() public ERC721("TradingCard","TCG") {
         // IPFS protocol is used to store the metadata of cards
         _setBaseURI("ipfs://");
     }
