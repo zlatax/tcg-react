@@ -1,0 +1,14 @@
+A TCG will be a ERC721 token which can be traded using Ethreum in a metamask wallet connected
+to a web browser.
+
+Characteristics of TCG:
+
+    Id: uint
+         Unique ID of the card, is an auto-increment integer 
+        assigned by the smart contract upon creation.
+    Title: string
+        Name of the card.
+    Image: string
+        URL/URI of the image of the card.
+    Description: string
+        A paragraph explaining card's details or any effects it might have.
