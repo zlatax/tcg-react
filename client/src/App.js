@@ -10,14 +10,14 @@ import TcgMarketPage from "./components/pages/TcgMarket";
 import Layout from "./components/layout/Layout";
 
 class App extends Component {
-  state = {web3: null, accounts: null, contract: null };
+  state = {web3: null, address: null, contract: null , ownedTcg:[]};
 
   componentDidMount = async () => {
     try {
       // Get network provider and web3 instance.
       const web3 = await getWeb3();
       // Use web3 to get the user's accounts.
-      const userAddress = await ethereum.selectedAddress;
+      const userAddress = await window.ethereum.selectedAddress;
 
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
@@ -29,7 +29,8 @@ class App extends Component {
 
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, contract: instance });
+      // passing function in setState, after the state changes ensures that the state variables are the vairables that you have set to be changed
+      this.setState({ web3, userAddress, contract: instance },this.getOwned);
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -39,17 +40,25 @@ class App extends Component {
     }
   };
 
-  runExample = async () => {
-    const { accounts, contract } = this.state;
+  getOwned = async () => {
+    const { address, contract } = this.state;
 
-    // Stores a given value, 5 by default.
-    await contract.methods.set(5).send({ from: accounts[0] });
+    // retrieve id list of owned tokens
+    const uris = await contract.methods.getTokenURIs().call(function (err,res) {
+      if(err) {
+        console.log("An error occured whilst retrieving data from contract!",err);
+        return
+      }
+      return res;
+    })
 
-    // Get the value from the contract to prove it worked.
-    const response = await contract.methods.get().call();
+    // retrieve uris of tokens
+    for(var i=0;i<uris.length;i++) {
+      uris[i] = await contract.methods.tokenURI(uris[i]).call();
+    }
 
     // Update state with the result.
-    this.setState({ storageValue: response });
+    this.setState({ ownedTcg: uris });
   };
 
   render() {
@@ -64,7 +73,7 @@ class App extends Component {
               <TcgMarketPage/>
             </Route>
             <Route path="/mytcgs" >
-              <OwnedTcgPage/>
+              <OwnedTcgPage ownedTcg={this.state.ownedTcg}/>
             </Route>
           </Switch>
         </Layout>

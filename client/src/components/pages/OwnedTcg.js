@@ -2,31 +2,35 @@ import React from 'react';
 import { useState,useEffect } from 'react';
 import TcgList from '../tcg/TcgList';
 
+import { NFTStorage, File } from 'nft.storage';
+
+
 function OwnedTcgPage(props) {
+    const client = new NFTStorage({ token: process.env.REACT })
     const [isLoading, setIsLoading] = useState(true);
-    const [loadedTcgs, setLoadedTcgs] = useState([]);
-    
+    const [loadedTcg, setLoadedTcg] = useState([]);
+
+    const ownedTcgURI = props.ownedTcgs;
+
     useEffect(()=> {
         setIsLoading(true);
-        fetch(
-            'https://tcg-react-18773-default-rtdb.firebaseio.com/users.json'
-          ).then(response=> {
-            return response.json();
-          }).then(data=> {
-            const tcgs = [];
-            for (const key in data) {
-              // Need to fetch the list of tokens owned by the user.
-              if(data[key].owner)
-                const meetup = {
-                  id:key,
-                  ...data[key]
-                }
-              meetups.push(meetup);
-            }
-    
-            setIsLoading(false);
-            setLoadedMeetups(meetups);
-    })
+        const cards =[];
+        for(const uri in ownedTcgURI) {
+          fetch(
+            uri
+          ).then(response=>{
+            return response.json()
+          }).then(data=>{
+              console.log(data);
+              const card ={
+                ...data
+              }
+              cards.push(card);
+          });
+        }
+        setIsLoading(false);
+        setLoadedTcg(cards);
+    },[ownedTcgURI])
 
     let content;
 
@@ -37,7 +41,7 @@ function OwnedTcgPage(props) {
     } else {
         content = <section>
             <h1>{props.owner}'s TCGs</h1>
-            <TcgList ownedtcgs = {loadedTcgs}/>
+            <TcgList mytcgs = {loadedTcg}/>
         </section>
     }
 

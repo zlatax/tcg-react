@@ -36,11 +36,16 @@ contract tcg is ERC721URIStorage {
         return new_id;
     }
 
-    function _setBaseURI(string memory _newURI) internal {
-        baseURI = _newURI;
+    function _setBaseURI(string memory _newBaseURI) internal {
+        baseURI = _newBaseURI;
     }
 
     function _baseURI() internal view override returns (string memory)  {
         return baseURI;
+    }
+
+    // returns the URIs of all the tokens msg.sender owns
+    function getTokenURIs() external view returns(uint[] memory) {
+        return userOwnedCards[msg.sender];
     }
 }

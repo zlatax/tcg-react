@@ -7,10 +7,10 @@ function TcgList(props) {
     return <ul className={classes.list}>
         {props.mytcgs.map(()=>{
             return <TcgItem
-                    key={props.title}
+                    key={props.id}
                     title={props.title}
-                    desc={props.desc}
-                    image={props.image}/>
+                    image={props.image}
+                    desc={props.desc}/>
         })}
     </ul>
 }
