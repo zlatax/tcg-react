@@ -2,8 +2,9 @@ import React from 'react';
 import { useState,useEffect } from 'react';
 import TcgList from '../tcg/TcgList';
 
-import { NFTStorage, File } from 'nft.storage';
+import {getFileByCID} from "../utils/pinata";
 
+import { NFTStorage, File } from 'nft.storage';
 
 function OwnedTcgPage(props) {
     const client = new NFTStorage({ token: process.env.REACT })
@@ -14,40 +15,53 @@ function OwnedTcgPage(props) {
 
     useEffect(()=> {
         setIsLoading(true);
-        const cards =[];
-        for(const uri in ownedTcgURI) {
-          fetch(
-            uri
-          ).then(response=>{
-            return response.json()
-          }).then(data=>{
-              console.log(data);
-              const card ={
-                ...data
-              }
-              cards.push(card);
-          });
-        }
+        const cards = [];
+        const card = getFileByCID('QmU1r1CPL51pELoU3gf6o7E1SoaiKwrTSCSNR17CuazDTt')
+        .then((response)=> {
+          cards.push(response.data);
+          
+        });
         setIsLoading(false);
-        setLoadedTcg(cards);
+        setLoadedTcg(cards); 
+        
+        // for(const uri in ownedTcgURI) {
+        //   fetch(
+        //     "https://gateway.pinata.cloud/ipfs/"+uri
+        //   ).then(response=>{
+        //     if(!response.success) {
+        //       return {
+        //         success:false,
+        //         status:"There was an error retrieving NFT information from IPFS."
+        //       }
+        //     }
+        //     return response.json()
+        //   }).then(data=>{
+        //       console.log(data);
+        //       const card ={
+        //         ...data
+        //       }
+        //       cards.push(card);
+        //   });
+        // }
+        
     },[ownedTcgURI])
 
     let content;
 
     if(isLoading) {
-        content = <section>
-            <p>Your cards are loading...</p>
-        </section>
+        content = <p>Your cards are loading...</p>
     } else {
-        content = <section>
-            <h1>{props.owner}'s TCGs</h1>
-            <TcgList mytcgs = {loadedTcg}/>
-        </section>
+        if(loadedTcg===null){
+          content = <p>Nothing to show here...</p>
+            
+        }
+        else {
+          content = <TcgList mytcgs = {loadedTcg}/>
+        }
     }
-
     return <section>
         <h1>{props.owner}'s TCGs</h1>
-        <TcgList/>
+        {content}
     </section>
 }
 

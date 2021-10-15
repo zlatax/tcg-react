@@ -5,12 +5,12 @@ import {classes} from "./TcgList.module.css";
 
 function TcgList(props) {
     return <ul className={classes.list}>
-        {props.mytcgs.map(()=>{
+        {props.mytcgs.map((tcg)=>{
             return <TcgItem
-                    key={props.id}
-                    title={props.title}
-                    image={props.image}
-                    desc={props.desc}/>
+                    key={tcg.title}
+                    title={tcg.title}
+                    image={tcg.image}
+                    desc={tcg.desc}/>
         })}
     </ul>
 }

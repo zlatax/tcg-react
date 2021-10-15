@@ -30,7 +30,7 @@ class App extends Component {
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
       // passing function in setState, after the state changes ensures that the state variables are the vairables that you have set to be changed
-      this.setState({ web3, userAddress, contract: instance },this.getOwned);
+      this.setState({ web3, userAddress, contract: instance });  //,this.getOwned);
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
