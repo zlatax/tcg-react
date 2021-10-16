@@ -2,6 +2,15 @@
   box-sizing: border-box;
 }
 
+#root {
+  height: 100%;
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
 body {
   font-family: sans-serif;
   margin: 3rem;

@@ -6,8 +6,10 @@ import { Switch, Route } from "react-router-dom";
 
 import OwnedTcgPage from "./components/pages/OwnedTcg";
 import TcgMarketPage from "./components/pages/TcgMarket";
+import NewTcgPage from "./components/pages/NewTcg";
 
 import Layout from "./components/layout/Layout";
+
 
 class App extends Component {
   state = {web3: null, address: null, contract: null , ownedTcg:[]};
@@ -66,7 +68,7 @@ class App extends Component {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
     return (
-      <div className="App">
+      <div id="App">
         <Layout>
           <Switch>
             <Route path="/" exact>
@@ -74,6 +76,9 @@ class App extends Component {
             </Route>
             <Route path="/mytcgs" >
               <OwnedTcgPage ownedTcg={this.state.ownedTcg}/>
+            </Route>
+            <Route path="/createtcg">
+              <NewTcgPage />
             </Route>
           </Switch>
         </Layout>

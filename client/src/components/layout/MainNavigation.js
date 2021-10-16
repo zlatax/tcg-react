@@ -19,6 +19,9 @@ function MainNavigation() {
                 <li>
                     <Link to='/mytcgs'>My TCGs</Link>
                 </li>
+                <li>
+                    <Link to='/createtcg'>Create New TCG</Link>
+                </li>
                 {/* <li>
                     <Link to='/favorites'>
                         Favorites

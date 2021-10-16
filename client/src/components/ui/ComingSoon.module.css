@@ -1,0 +1,25 @@
+@font-face {
+    font-family: Momcake;
+    src: url('../fonts/MomcakeThin-9Y6aZ.otf');
+}
+@font-face {
+    font-family: Momcake;
+    font-weight: bold;
+    src: url('../fonts/MomcakeBold-WyonA.otf');
+}
+
+.msg {
+    font-family: Momcake;
+    text-align: center;
+    margin: auto;
+    padding:70px 0;
+}
+
+.msg h2 {
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.msg p {
+    font-size: 40px;
+}
