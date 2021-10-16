@@ -14,15 +14,28 @@ function OwnedTcgPage(props) {
     const ownedTcgURI = props.ownedTcgs;
 
     useEffect(()=> {
+      (async()=> {
         setIsLoading(true);
-        const cards = [];
-        const card = getFileByCID('QmU1r1CPL51pELoU3gf6o7E1SoaiKwrTSCSNR17CuazDTt')
-        .then((response)=> {
-          cards.push(response.data);
-          
+
+        getFileByCID('QmU1r1CPL51pELoU3gf6o7E1SoaiKwrTSCSNR17CuazDTt')
+        .then(response=>{
+          return response.data;
+        })
+        .then((data)=> {
+          const cards = [];
+          const card = {
+            title: data.title,
+            desc: data.desc,
+            image: data.image
+          }
+          cards.push(card);
+
+          setIsLoading(false);
+          setLoadedTcg(cards); 
         });
-        setIsLoading(false);
-        setLoadedTcg(cards); 
+        
+      })()
+        
         
         // for(const uri in ownedTcgURI) {
         //   fetch(
@@ -44,14 +57,14 @@ function OwnedTcgPage(props) {
         //   });
         // }
         
-    },[ownedTcgURI])
+    },[]);
 
     let content;
 
     if(isLoading) {
         content = <p>Your cards are loading...</p>
     } else {
-        if(loadedTcg===null){
+        if(loadedTcg.length===0){
           content = <p>Nothing to show here...</p>
             
         }
@@ -60,7 +73,7 @@ function OwnedTcgPage(props) {
         }
     }
     return <section>
-        <h1>{props.owner}'s TCGs</h1>
+        <h1>Your TCGs</h1>
         {content}
     </section>
 }

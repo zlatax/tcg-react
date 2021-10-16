@@ -1,16 +1,17 @@
 import React from 'react';
-import {classes} from "./TcgItem.module.css";
 
 import Card from "../ui/Card";
 
+const styles = require("./TcgItem.module.css");
+
 function TcgItem(props) {
     return <Card>
-        <div className={classes.image}>
+        <div className={styles.image}>
             <img src ={props.image} alt={props.title}/>        
         </div>
-        <div className={classes.content}>
+        <div className={styles.content}>
             <h3>{props.title}</h3>
-            <p>{props.description}</p>
+            <p>{props.desc}</p>
         </div>
         {/* Add button here later */}
     </Card>
