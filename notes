@@ -20,3 +20,5 @@ Characteristics of TCG:
 Instead of cards, a NFT token will represent a horse
 each with 
 - Name (The name will be inspired by breeder and the parents)
+
+Each NFT metadata will be stored by their id.

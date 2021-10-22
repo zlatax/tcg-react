@@ -19,7 +19,7 @@ export const pinJSONToIPFS = async(JSONBody) => {
         .then(function (response) {
            return {
                success: true,
-               pinataUrl: "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash
+               pinataUrl: response.data.IpfsHash
            };
         })
         .catch(function (error) {

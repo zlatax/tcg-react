@@ -10,6 +10,7 @@ import NewTcgPage from "./components/pages/NewTcg";
 
 import Layout from "./components/layout/Layout";
 
+import Loading from "./components/ui/Loading";
 
 class App extends Component {
   state = {web3: null, address: null, contract: null , ownedTcg:[]};
@@ -65,7 +66,10 @@ class App extends Component {
 
   render() {
     if (!this.state.web3) {
-      return <div>Loading Web3, accounts, and contract...</div>;
+      return <section>
+        <Loading/>
+        <div>Loading Web3, accounts, and contract...</div>
+        </section>;
     }
     return (
       <div id="App">
